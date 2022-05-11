@@ -1,0 +1,55 @@
+<!-- https://ng-bootstrap.github.io/#/components/table/examples -->
+<!-- https://www.c-sharpcorner.com/blogs/angular-crud-operations -->
+<div class="container" style="margin-top: 20px;">
+
+    <form>
+        <div class="row">
+            <div class="col-3">
+                <label class="form-label">Fecha de Inicio</label>
+                <input [(ngModel)]='fecha_inicio' [ngModelOptions]="{standalone: true}" type="date" class="form-control">
+            </div>
+    
+            <div class="col-3">
+                <label class="form-label">Fecha Final</label>
+                <input [(ngModel)]='fecha_fin' [ngModelOptions]="{standalone: true}" type="date" class="form-control">
+            </div>
+
+            <div class="col-3">
+                <br>                
+                <button class="btn btn-primary" (click)="getInvoices()">Buscar</button>
+            </div>
+        </div>        
+    </form>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Invoice Number</th>
+                <th>Total</th>
+                <th>Invoice Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let invoice of Invoices">
+            <tr>
+                <td>{{invoice.id}}</td>
+                <td>{{invoice.invoice_number}}</td>
+                <td>{{invoice.total}}</td>
+                <td>{{invoice.invoice_date | date:'d/M/yyyy'}}</td>
+                <td>{{invoice.status}}</td>
+            </tr>
+        </tbody>        
+    </table>
+
+    <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshInvoice()">
+        </ngb-pagination>
+      
+        <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshInvoice()">
+          <option [ngValue]="2">2 items</option>
+          <option [ngValue]="4">4 items</option>
+          <option [ngValue]="6">6 items</option>
+        </select>
+      </div>
+</div>
